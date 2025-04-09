@@ -3,18 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Infinitesol Onboarding Form</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Infinitesol Client Onboarding</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <img src="Logo original_png.png" alt="Infinitesol Logo" class="logo" />
-    <h1>Client Onboarding Form</h1>
-  </header>
-  <main>
-    <!-- Forms will be dynamically rendered by script.js -->
-    <div id="form-container"></div>
-  </main>
+  <div class="header">
+    <img src="assets/logo.png" alt="Infinitesol Logo" class="logo" />
+    <h1>Infinitesol Client Onboarding Form</h1>
+  </div>
+
+  <!-- Organization Section -->
+  <div id="org-section" class="form-section">
+    <form id="org-form">
+      <h2>Organization Details</h2>
+      <input name="org_name" placeholder="Organization Name" required />
+      <textarea name="primary_address" placeholder="Headquarters Address" required></textarea>
+
+      <label>Do you work in remote locations?</label>
+      <select name="remote_location_q">
+        <option>No</option>
+        <option>Yes</option>
+      </select>
+
+      <div id="remote_location_1" class="hidden">
+        <textarea name="remote_location_1" placeholder="Remote Location Address #1"></textarea>
+      </div>
+
+      <input name="org_email" placeholder="Organization Email" type="email" required />
+      <input name="org_phone" placeholder="+xx xxxxxxxxxx" required />
+      <input name="org_website" placeholder="Website" type="url" />
+
+      <input name="crm_details" placeholder="CRM Details" />
+      <input name="employee_count" placeholder="Number of Employees" type="number" />
+      <input name="domain_details" placeholder="Domain Details" />
+      <input name="domain_by" placeholder="Domain Maintained By" />
+
+      <input name="it_contact_name" placeholder="IT Contact Name" />
+      <input name="it_contact_phone" placeholder="+xx xxxxxxxxxx" />
+      <input name="it_contact_email" type="email" placeholder="Contact Email" />
+
+      <button type="submit">Next</button>
+    </form>
+  </div>
+
+  <!-- Employee Section -->
+  <div id="employee-section" class="form-section hidden">
+    <form id="employee-form">
+      <h2>Employee Contact Details</h2>
+      <input name="first_name" placeholder="First Name" required />
+      <input name="last_name" placeholder="Last Name" required />
+      <input name="org_email" placeholder="Organizational Email" type="email" />
+      <input name="personal_email" placeholder="Personal Email" type="email" required />
+      <input name="mobile" placeholder="+xx xxxxxxxxxx" required />
+      <input name="position" placeholder="Position" />
+
+      <label>Status:</label>
+      <select name="status">
+        <option>Active</option>
+        <option>Inactive</option>
+      </select>
+
+      <select name="location">
+        <option>Headquarters</option>
+        <option>Remote Location 1</option>
+        <!-- Populate dynamically if needed -->
+      </select>
+
+      <button type="submit">Next</button>
+    </form>
+  </div>
+
+  <!-- Asset Section -->
+  <div id="asset-section" class="form-section hidden">
+    <form id="asset-form">
+      <h2>Asset Details</h2>
+
+      <label>Device Type</label>
+      <select name="device_type" id="device_type">
+        <option>Laptop</option>
+        <option>Desktop</option>
+        <option>Smartphone</option>
+        <option>Tablet</option>
+        <option>Server</option>
+        <option>Router</option>
+        <option>Switch</option>
+        <option>Firewall</option>
+        <option>Networking</option>
+        <option>Others</option>
+      </select>
+
+      <input name="device_name" placeholder="Name of Device" />
+      <input name="serial_number" placeholder="Serial Number / Product ID" />
+      <input name="manufacturer" placeholder="Manufacturer" />
+      <input name="model" placeholder="Model" />
+
+      <div id="contact-details-group" class="hidden">
+        <select name="contact">
+          <option>John Doe</option>
+          <option>Other</option>
+        </select>
+
+        <input name="contact_email" placeholder="Contact Email" type="email" />
+      </div>
+
+      <select name="location">
+        <option>Headquarters</option>
+        <option>Remote Location 1</option>
+      </select>
+
+      <div id="os-group" class="hidden">
+        <input name="os" placeholder="Operating System" />
+      </div>
+
+      <div id="ip-group" class="hidden">
+        <input name="internal_ip" placeholder="Internal IP Address" />
+      </div>
+
+      <div id="mac-group" class="hidden">
+        <input name="mac_address" placeholder="MAC Address" />
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
