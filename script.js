@@ -1,47 +1,88 @@
-document.getElementById("form-container").innerHTML = `
-  <h2>Organization Details</h2>
-  <form id="org-form">
-    <label>Organisation Name: <input type="text" required></label><br>
-    <label>Primary Location Address: <input type="text" required></label><br>
-    <label>Remote Locations? 
-      <select id="remote-locations">
-        <option value="no">No</option>
-        <option value="yes">Yes</option>
-      </select>
-    </label><br>
-    <div id="remote-fields" style="display:none;">
-      <label>Remote Address 1: <input type="text"></label><br>
-    </div>
-    <button type="submit">Next</button>
-  </form>
-`;
+// Replace these with your actual SheetDB endpoints
+const orgSheetURL = "https://sheetdb.io/api/v1/YOUR_ORG_SHEET_ID";
+const empSheetURL = "https://sheetdb.io/api/v1/YOUR_EMP_SHEET_ID";
+const assetSheetURL = "https://sheetdb.io/api/v1/YOUR_ASSET_SHEET_ID";
 
-document.getElementById("remote-locations").addEventListener("change", (e) => {
-  const val = e.target.value;
-  document.getElementById("remote-fields").style.display = val === "yes" ? "block" : "none";
+// Handle all forms on submit
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ========== Organization Form ==========
+  const orgForm = document.getElementById("org-form");
+  orgForm?.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(orgForm));
+    sendDataToSheet(data, orgSheetURL, orgForm);
+  });
+
+  // ========== Employee Form ==========
+  const empForm = document.getElementById("employee-form");
+  empForm?.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(empForm));
+    sendDataToSheet(data, empSheetURL, empForm);
+  });
+
+  // ========== Asset Form ==========
+  const assetForm = document.getElementById("asset-form");
+  assetForm?.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(assetForm);
+    const deviceType = formData.get("device_type");
+
+    // Show/hide based on device type
+    toggleAssetConditionalFields(deviceType);
+
+    const data = Object.fromEntries(formData);
+    sendDataToSheet(data, assetSheetURL, assetForm);
+  });
+
+  // Watch dropdowns for conditional logic
+  document.getElementById("device_type")?.addEventListener("change", (e) => {
+    toggleAssetConditionalFields(e.target.value);
+  });
+
+  document.querySelectorAll("input[name='remote_location_q']").forEach((input) => {
+    input.addEventListener("change", (e) => {
+      const show = e.target.value === "Yes";
+      document.getElementById("remote_location_1")?.classList.toggle("hidden", !show);
+    });
+  });
 });
-// Example for organization form
-document.getElementById("org-form").addEventListener("submit", function (e) {
-  e.preventDefault();
 
-  const data = {
-    data: {
-      org_name: document.getElementById("org_name").value,
-      location: document.getElementById("hq_location").value,
-      // Add other fields here
-    },
-  };
+function toggleAssetConditionalFields(type) {
+  const showDevices = ["Laptop", "Desktop", "Smartphone", "Tablet", "Server"];
+  const showNetwork = ["Router", "Switch", "Firewall", "Networking"];
 
-  fetch("https://sheetdb.io/api/v1/fazt7wz3cci82", {
+  const contactGroup = document.getElementById("contact-details-group");
+  const osGroup = document.getElementById("os-group");
+  const ipGroup = document.getElementById("ip-group");
+  const macGroup = document.getElementById("mac-group");
+
+  contactGroup?.classList.toggle("hidden", !showDevices.includes(type));
+  osGroup?.classList.toggle("hidden", !showDevices.includes(type));
+  ipGroup?.classList.toggle("hidden", !showNetwork.includes(type));
+  macGroup?.classList.toggle("hidden", !showNetwork.includes(type));
+}
+
+// Main function to submit data
+function sendDataToSheet(data, url, form) {
+  fetch(url, {
     method: "POST",
+    body: JSON.stringify({ data }),
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
-  }).then((response) => {
-    if (response.ok) {
-      alert("Organization Details Submitted!");
-      document.getElementById("org-form").reset();
-    }
-  });
-});
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Network response was not OK");
+      return res.json();
+    })
+    .then(() => {
+      alert("Form submitted successfully!");
+      form.reset();
+    })
+    .catch((err) => {
+      console.error("Submission error:", err);
+      alert("There was an error submitting the form.");
+    });
+}
