@@ -1,31 +1,42 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #f4f7fa;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom right, #170646, #1846E9, #00E8AD);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-container {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
   padding: 30px;
+  width: 90%;
   max-width: 900px;
-  margin: auto;
 }
 
 .logo {
-  width: 160px;
-  margin-bottom: 20px;
+  width: 180px;
+  display: block;
+  margin: 0 auto 20px auto;
 }
 
 h1 {
-  font-size: 26px;
-  color: #003366;
+  font-size: 28px;
+  color: #170646;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 h2 {
   margin-top: 20px;
   color: #333;
+  font-size: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
 }
 
 input,
@@ -34,15 +45,15 @@ textarea,
 button {
   display: block;
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 12px;
+  margin: 12px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
 }
 
 button {
-  background-color: #0056b3;
+  background-color: #170646;
   color: #fff;
   font-weight: bold;
   border: none;
@@ -51,7 +62,7 @@ button {
 }
 
 button:hover {
-  background-color: #003d80;
+  background-color: #0e0332;
 }
 
 .hidden {
