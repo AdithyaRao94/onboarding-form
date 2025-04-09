@@ -20,3 +20,28 @@ document.getElementById("remote-locations").addEventListener("change", (e) => {
   const val = e.target.value;
   document.getElementById("remote-fields").style.display = val === "yes" ? "block" : "none";
 });
+// Example for organization form
+document.getElementById("org-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const data = {
+    data: {
+      org_name: document.getElementById("org_name").value,
+      location: document.getElementById("hq_location").value,
+      // Add other fields here
+    },
+  };
+
+  fetch("https://sheetdb.io/api/v1/fazt7wz3cci82", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((response) => {
+    if (response.ok) {
+      alert("Organization Details Submitted!");
+      document.getElementById("org-form").reset();
+    }
+  });
+});
